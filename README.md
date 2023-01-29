@@ -1,4 +1,4 @@
-# Power Hack Server
+# Power Hack
 
 Live Site Link: https://teamlance-58135.web.app/
 <br/>
