@@ -6,26 +6,26 @@ Server Site Link: https://teamlance-server.onrender.com/
 
 ## What I do in this project
 Programming Technology
-React
-Node Js
-Tailwind
-Axios
-Express Js
-MongoDB
-React Router latest version
+<li>React</li>
+<li>Node Js</li>
+<li>Tailwind</li>
+<li>Axios</li>
+<li>Express Js</li>
+<li>MongoDB</li>
+<li>React Router latest version</li>
 
-Some Features
-Animation of data fetching
-Private Route
-Authenticated Login-Registration
-Heroku Server Hosting
-Conditional Rendering
-React Hook Form
-CURD Operation
+### Some Features
+<li>Animation of data fetching</li>
+<li>Private Route</li>
+<li>JWT</li>
+<li>Authenticated Login-Registration</li>
+<li>Conditional Rendering</li>
+<li>React Hook Form</li>
+<li>CURD Operation</li>
 
-Installation Instructions
-npx create-react-app app-name
-npm i axios
-npm i react-hook-form
-npm i react-router-dom
-npm i reactjs-popup
+### Installation Instructions
+<li>npx create-react-app app-name</li>
+<li>npm i axios</li>
+<li>npm i react-hook-form</li>
+<li>npm i react-router-dom</li>
+<li>npm i reactjs-popup</li>
