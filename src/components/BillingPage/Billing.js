@@ -1,29 +1,30 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AddBillForm from "./AddBillForm";
 import BillPopup from "./BillPopup";
+
 
 const Billing = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+  
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:5000/billing-list")
+    fetch("https://power-hack-server-yq09.onrender.com/billing-list")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
         setIsLoading(false);
       });
-  }, [reducerValue]);
+  }, []);
   
+
   //DELETE A PRODUCT
   const handleDeleteProduct = (id) => {
     const proceed = window.confirm(
       "Are you sure, you want to delete? The product will be deleted."
     );
     if (proceed) {
-      const url = `http://localhost:5000/delete-billing/${id}`;
+      const url = `https://power-hack-server-yq09.onrender.com/delete-billing/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -112,14 +113,18 @@ const Billing = () => {
   }
   return (
     <div className="my-8">
-<div style={{display: 'none'}}>
-<AddBillForm forceUpdate={forceUpdate}/>
-</div>
+
       <div className="my-5 grid grid-cols-1 justify-center items-center place-items-center">
         <h2 className="font-bold text-2xl">Our Billing List</h2>
 
         <div className="my-6 flex justify-between items-center">
-        <div>Search...</div>
+        <div>
+            <input 
+            type='text' 
+            placeholder="Search..."
+            className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block border border-2 w-full shadow-sm sm:text-sm outline-none rounded-md"
+            />
+            </div>
         <div className="w-96 mx-auto px-10 grid grid-cols-2 gap-3 justify-center items-center">
         <button className="mt-2 text-white bg-purple-600 justify-center px-3 py-2 rounded-md hover:bg-green-500 transition">
           <BillPopup />

@@ -20,7 +20,7 @@ export default function Navbar() {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/billing-list")
+    fetch("https://power-hack-server-yq09.onrender.com/billing-list")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);

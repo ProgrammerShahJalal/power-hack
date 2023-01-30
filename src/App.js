@@ -7,6 +7,7 @@ import LoginPage from "./components/Login/LoginPage/LoginPage";
 import RegisterPage from "./components/Login/Register/RegisterPage/RegisterPage";
 import PrivateRoute from "./components/Login/PrivateRoute/PrivateRoute";
 import Profile from "./components/Profile/Profile";
+import UpdateBillForm from "./components/BillingPage/UpdateBillForm";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path='/update-billing/:id' element={<PrivateRoute><UpdateBillForm /></PrivateRoute>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>

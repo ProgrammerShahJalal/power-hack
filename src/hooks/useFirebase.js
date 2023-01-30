@@ -22,7 +22,7 @@ const useFirebase = () => {
                 const newUser = { email, displayName: name }
                 setUser(newUser);
                    
-                    fetch('http://localhost:5000/registration', {
+                    fetch('https://power-hack-server-yq09.onrender.com/registration', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'
@@ -84,7 +84,7 @@ const useFirebase = () => {
 
     // admin useEffect
     useEffect(() => {
-        fetch(`http://localhost:5000/registration/${user.email}`)
+        fetch(`https://power-hack-server-yq09.onrender.com/registration/${user.email}`)
             .then(res => res.json())
             .then(data => setAdmin(data.admin));
     }, [user.email])
@@ -121,7 +121,7 @@ const useFirebase = () => {
 
     const saveUserLogin = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch(`http://localhost:5000/login/${user?.email}`, {
+        fetch(`https://power-hack-server-yq09.onrender.com/login/${user?.email}`, {
             method: method,
             headers: {
                 'content-type': 'application/json'
@@ -134,7 +134,7 @@ const useFirebase = () => {
 
     const saveUserRegister = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch('http://localhost:5000/registration', {
+        fetch('https://power-hack-server-yq09.onrender.com/registration', {
             method: method,
             headers: {
                 'content-type': 'application/json'

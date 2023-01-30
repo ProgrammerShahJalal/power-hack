@@ -7,7 +7,7 @@ export default function AddBillForm({forceUpdate}) {
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = (data) => {
         console.log(data);
-        axios.post('http://localhost:5000/add-billing', data)
+        axios.post('https://power-hack-server-yq09.onrender.com/add-billing', data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('Added a New Billing Successfully!');
