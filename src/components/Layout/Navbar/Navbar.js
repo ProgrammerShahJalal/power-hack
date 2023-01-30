@@ -1,12 +1,8 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
-const navigation = [
-  { name: 'Dashboard', to: '/dashboard', current: true },
-  { name: 'Billing', to: '/billing', current: false },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -14,6 +10,23 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { user, logOut } = useAuth();
+
+    const navigation = [
+    { name: 'Dashboard', to: '/dashboard', current: false },
+    { name: 'Billing', to: '/billing', current: true }
+  ]
+  
+  const [products, setProducts] = useState([]);
+
+
+  useEffect(() => {
+    fetch("http://localhost:5000/billing-list")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+      });
+  }, []);
+  
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -65,7 +78,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <p className='text-white pr-6'>Total Paid: 0</p>
+                <p className='text-white pr-6'>Total Paid: {products?.length}</p>
                 {
                                     user.email ? <>
                                      {/* Profile dropdown */}

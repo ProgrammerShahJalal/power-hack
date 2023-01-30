@@ -21,7 +21,17 @@ const useFirebase = () => {
                 setAuthError('');
                 const newUser = { email, displayName: name }
                 setUser(newUser);
-                saveUser(email, name, 'POST')
+                   
+                    fetch('http://localhost:5000/registration', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(newUser)
+                    })
+            
+                        .then()
+                
                 updateProfile(auth.currentUser, {
                     displayName: name
                 }).then(() => {
@@ -43,6 +53,8 @@ const useFirebase = () => {
         setIsloading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                const user = userCredential?.user;
+                saveUserLogin(user?.email, user?.displayName, 'PUT');
                 const destination = location?.state?.from || '/';
                 navigate(destination);
                 setAuthError('');
@@ -72,7 +84,7 @@ const useFirebase = () => {
 
     // admin useEffect
     useEffect(() => {
-        fetch(`https://mighty-chamber-44774.herokuapp.com/users/${user.email}`)
+        fetch(`http://localhost:5000/registration/${user.email}`)
             .then(res => res.json())
             .then(data => setAdmin(data.admin));
     }, [user.email])
@@ -87,12 +99,16 @@ const useFirebase = () => {
             .finally(() => setIsloading(false));;
     }
 
+
+    /* ==========GOOGLE AUTHENTICATION================= */
+
     const signInWithGoogle = (location, navigate) => {
         setIsloading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                saveUser(user.email, user.displayName, 'PUT')
+                saveUserLogin(user?.email, user?.displayName, 'PUT')
+                saveUserRegister(user?.email, user?.displayName, 'POST')
                 setAuthError('');
                 const destination = location?.state?.from || '/';
                 navigate(destination);
@@ -103,9 +119,9 @@ const useFirebase = () => {
     }
 
 
-    const saveUser = (email, displayName, method) => {
+    const saveUserLogin = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch('https://mighty-chamber-44774.herokuapp.com/users', {
+        fetch(`http://localhost:5000/login/${user?.email}`, {
             method: method,
             headers: {
                 'content-type': 'application/json'
@@ -115,6 +131,20 @@ const useFirebase = () => {
 
             .then()
     }
+
+    const saveUserRegister = (email, displayName, method) => {
+        const user = { email, displayName };
+        fetch('http://localhost:5000/registration', {
+            method: method,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+
+            .then()
+    }
+
 
     return {
         user,

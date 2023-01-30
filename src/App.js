@@ -15,7 +15,14 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path='/home' element={<HomePage />} />
-          <Route path='/dashboard' element={<Profile />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/billing"
             element={
