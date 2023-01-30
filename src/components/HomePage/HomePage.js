@@ -5,7 +5,7 @@ import Hero from './Hero';
 const HomePage = () => {
   return (
     <Layout>
-      <Hero/>
+     <Hero/>
     </Layout>
   );
 };
