@@ -78,7 +78,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <p className='text-white pr-6'>Total Paid: {products?.length}</p>
+                {user?.email && <p className='text-white pr-6'>Total Paid: {products?.length}</p>}
                 {
                                     user.email ? <>
                                      {/* Profile dropdown */}
