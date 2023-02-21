@@ -1,11 +1,11 @@
-# Power Hack
+# Power Hack Server
 
-Live Site Link: https://teamlance-58135.web.app/
+Live Site Link: https://power-hack-612cc.web.app/
 <br/>
-Server Site Link: https://teamlance-server.onrender.com/
+Server Site Link: https://power-hack-server-yq09.onrender.com/
 
 ## What I do in this project
-Programming Technology
+<b><blockquote> Programming Technology</blockquote></b>
 <li>React</li>
 <li>Node Js</li>
 <li>Tailwind</li>
@@ -13,19 +13,16 @@ Programming Technology
 <li>Express Js</li>
 <li>MongoDB</li>
 <li>React Router latest version</li>
-
-### Some Features
+<br/>
+<b><blockquote> Some Features</blockquote></b>
 <li>Animation of data fetching</li>
 <li>Private Route</li>
-<li>JWT</li>
 <li>Authenticated Login-Registration</li>
+<li>Render Server Hosting</li>
 <li>Conditional Rendering</li>
 <li>React Hook Form</li>
 <li>CURD Operation</li>
-
-### Installation Instructions
-<li>npx create-react-app app-name</li>
-<li>npm i axios</li>
-<li>npm i react-hook-form</li>
-<li>npm i react-router-dom</li>
-<li>npm i reactjs-popup</li>
+<br/>
+<b><blockquote> Installation Instructions</blockquote></b>
+<li>npm init -y</li>
+<li>yarn add cors mongodb express dotenv nodemon</li>
