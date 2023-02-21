@@ -3,7 +3,8 @@ import Popup from "reactjs-popup";
 import AddBillForm from "./AddBillForm";
 import "./BillPopup";
 
-const BillPopup = () => {
+const BillPopup = ({products, setProducts}) => {
+
   return (
     <div className="">
       <Popup
@@ -17,7 +18,7 @@ const BillPopup = () => {
       >
         {(close) => (
           <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-            <AddBillForm />
+            <AddBillForm products={products} setProducts={setProducts}/>
           </div>
         )}
       </Popup>

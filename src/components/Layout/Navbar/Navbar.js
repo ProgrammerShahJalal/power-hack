@@ -10,23 +10,24 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { user, logOut } = useAuth();
-
-    const navigation = [
-    { name: 'Dashboard', to: '/dashboard', current: false },
-    { name: 'Billing', to: '/billing', current: true }
-  ]
-  
-  const [products, setProducts] = useState([]);
+  const[store, setStore] =useState([]);
 
 
   useEffect(() => {
     fetch("https://power-hack-server-yq09.onrender.com/billing-list")
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
+        setStore(data);
       });
-  }, []);
+  }, [store]);
+
+
+    const navigation = [
+    { name: 'Dashboard', to: '/dashboard', current: false },
+    { name: 'Billing', to: '/billing', current: true }
+  ]
   
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -78,7 +79,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {user?.email && <p className='text-white pr-6'>Total Paid: {products?.length}</p>}
+                {(user?.email && store?.length) && <p className='text-white pr-6'>Total Paid: {store?.length}</p>}
                 {
                                     user.email ? <>
                                      {/* Profile dropdown */}
@@ -144,14 +145,13 @@ export default function Navbar() {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
-                  {item.name}
+                  <Link to={item.to}>{item.name}</Link>
                 </Disclosure.Button>
               ))}
             </div>

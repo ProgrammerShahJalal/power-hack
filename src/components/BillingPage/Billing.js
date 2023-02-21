@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import BillPopup from "./BillPopup";
-
+import UpdatePopup from "./UpdatePopup";
+import Pagination from "./Pagination";
 
 const Billing = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+
+
   useEffect(() => {
     setIsLoading(true);
     fetch("https://power-hack-server-yq09.onrender.com/billing-list")
@@ -16,7 +19,45 @@ const Billing = () => {
         setIsLoading(false);
       });
   }, []);
-  
+
+ 
+ 
+
+// Get current posts
+const indexOfLastPost = currentPage * postsPerPage;
+const indexOfFirstPost = indexOfLastPost - postsPerPage;
+// const currentPosts = ;
+
+// Change page
+const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
+  //SEARCH FUNCTIONALITY
+  const [foundResults, setFoundResults] = useState(products);
+
+  const filterResult = (e) => {
+    const keyword = e.target.value;
+
+    const results = products?.filter((pd) => {
+      return (
+        pd?.name?.toLowerCase().includes(keyword.toLowerCase()) ||
+        pd?.email?.toLowerCase().includes(keyword.toLowerCase()) ||
+        pd?.phone?.toLowerCase().includes(keyword.toLowerCase())
+      );
+    });
+    if (results.length) {
+      setFoundResults(results);
+    } else if (!results) {
+      setFoundResults(products);
+    } else {
+      setFoundResults([]);
+    }
+  };
+
+  useEffect(() => {
+    setFoundResults(products);
+  }, [products]);
+
 
   //DELETE A PRODUCT
   const handleDeleteProduct = (id) => {
@@ -113,60 +154,68 @@ const Billing = () => {
   }
   return (
     <div className="my-8">
-
       <div className="my-5 grid grid-cols-1 justify-center items-center place-items-center">
         <h2 className="font-bold text-2xl">Our Billing List</h2>
 
         <div className="my-6 flex justify-between items-center">
-        <div>
-            <input 
-            type='text' 
-            placeholder="Search..."
-            className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block border border-2 w-full shadow-sm sm:text-sm outline-none rounded-md"
+          <div>
+            <input
+              type="text"
+              placeholder="Search..."
+              onChange={filterResult}
+              className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block border border-2 w-full shadow-sm sm:text-sm outline-none rounded-md"
             />
-            </div>
-        <div className="w-96 mx-auto px-10 grid grid-cols-2 gap-3 justify-center items-center">
-        <button className="mt-2 text-white bg-purple-600 justify-center px-3 py-2 rounded-md hover:bg-green-500 transition">
-          <BillPopup />
-        </button>
-      </div>
+          </div>
+          <div className="w-96 mx-auto px-10 grid grid-cols-2 gap-3 justify-center items-center">
+            <button className="mt-2 text-white bg-purple-600 justify-center px-3 py-2 rounded-md hover:bg-green-500 transition">
+              <BillPopup products={products} setProducts={setProducts}/>
+            </button>
+          </div>
         </div>
 
         <div className="w-80 md:w-auto overflow-x-scroll md:overflow-hidden">
           <table className="table-auto border-collapse border border-blue-500">
             <thead>
               <tr>
-                <th className="border border-slate-600">Billing ID</th>
-                <th className="border border-slate-600">Full Name</th>
-                <th className="border border-slate-600">Email</th>
-                <th className="border border-slate-600">Phone</th>
-                <th className="border border-slate-600">Paid Amount</th>
-                <th className="border border-slate-600">Action</th>
+                <th className="border border-slate-600 text-center px-2">Billing ID</th>
+                <th className="border border-slate-600 text-center px-2">Full Name</th>
+                <th className="border border-slate-600 text-center px-2">Email</th>
+                <th className="border border-slate-600 text-center px-2">Phone</th>
+                <th className="border border-slate-600 text-center px-2">Paid Amount</th>
+                <th className="border border-slate-600 text-center px-2">Action</th>
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+            
+              {foundResults?.slice(indexOfFirstPost, indexOfLastPost).map((product) => (
                 <tr key={product.id}>
-                  <td className="border border-slate-700">{product._id}</td>
-                  <td className="text-blue-800 font-semibold border border-slate-700">
+                  <td className="border border-slate-700 px-2 text-center">{product._id}</td>
+                  <td className="text-blue-800 font-semibold border border-slate-700 px-2">
                     {product.name}
                   </td>
-                  <td className="border border-slate-700">{product.email}</td>
-                  <td className="border border-slate-700">{product.phone}</td>
-                  <td className="border border-slate-700">${product.amount}</td>
-                  <td className="border border-slate-700 flex">
-                    <Link to={`/update-billing/${product._id}`}>Edit</Link>
-                    <td
-                      onClick={() => handleDeleteProduct(product._id)}
-                      className="border border-slate-700 cursor-pointer border-none outline-none text-red-500 ml-3"
-                    >
+                  <td className="border border-slate-700 px-2 text-center">{product.email}</td>
+                  <td className="border border-slate-700 px-2 text-center">{product.phone}</td>
+                  <td className="border border-slate-700 px-2 text-center">${product.amount}</td>
+                  <td className="border border-slate-700 flex text-center">
+                    <div className="w-96 mx-auto px-10 grid grid-cols-2 gap-3 justify-center items-center">
+                      <button className="m-1 text-white bg-purple-600 justify-center px-2 py-2 rounded-md hover:bg-green-500 transition">
+                        <UpdatePopup products={products} setProducts={setProducts} id={product._id}/>
+                      </button>
+                      <button onClick={() => handleDeleteProduct(product._id)}
+                      className="m-1 text-white bg-red-600 justify-center px-3 py-2 rounded-md hover:bg-red-500 transition">
                       Delete
-                    </td>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={products.length}
+        paginate={paginate}
+      />
         </div>
       </div>
     </div>
